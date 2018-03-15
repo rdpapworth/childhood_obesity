@@ -1,0 +1,31 @@
+# Retrieve All Scottish P1 BMI stats
+# Using p1-BMI-epi rather than p1-BMI-clinical datasource
+
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdmx: <http://purl.org/linked-data/sdmx/2009/concept#>
+PREFIX data: <http://statistics.gov.scot/data/>
+PREFIX sdmxd: <http://purl.org/linked-data/sdmx/2009/dimension#>
+PREFIX mp: <http://statistics.gov.scot/def/measure-properties/>
+PREFIX stat: <http://statistics.data.gov.uk/def/statistical-entity#>
+PREFIX dim:<http://statistics.gov.scot/def/dimension/>
+
+
+SELECT ?year ?gender ?weightCategory ?area ?ratio 
+WHERE {
+  ?s qb:dataSet data:p1-BMI-epi ;
+     dim:gender ?genderURI ;
+     dim:weightCategory ?weightCatURI ;
+     sdmxd:refArea ?areaURI ;
+     sdmxd:refPeriod ?periodURI ;
+     mp:ratio ?ratio .
+
+	?periodURI rdfs:label ?year.
+    ?genderURI rdfs:label ?gender.
+    ?weightCatURI rdfs:label ?weightCategory.
+    ?areaURI rdfs:label ?area.
+ 
+}
+
+ORDER BY ?year ?gender ?weightCategory
